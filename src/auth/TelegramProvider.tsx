@@ -32,21 +32,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
-    async function init() {
-      try {
-        if (!WebApp.initData) {
-          setState((s) => ({
-            ...s,
-            loading: false,
-            error: "No initData from Telegram",
-          }));
-          return;
-        }
+    WebApp.ready();
 
-        WebApp.ready();
-        WebApp.expand();
+    const initData = WebApp.initData;
+    if (!initData) {
+      setState({
+        user: null,
+        tier: "normal",
+        loading: false,
+        error: null,
+      });
+      return;
+    }
 
-        const res = await login(WebApp.initData);
+    WebApp.expand();
+
+    login(initData)
+      .then((res) => {
         if (res.ok && res.user) {
           setState({
             user: res.user,
@@ -57,15 +59,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } else {
           setState((s) => ({ ...s, loading: false, error: "Auth failed" }));
         }
-      } catch (e: unknown) {
+      })
+      .catch((e: unknown) => {
         setState((s) => ({
           ...s,
           loading: false,
           error: e instanceof Error ? e.message : "Error",
         }));
-      }
-    }
-    init();
+      });
   }, []);
 
   return (

@@ -13,19 +13,13 @@ export default function Layout() {
     );
   }
 
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <p className="text-red-500 font-semibold">Error</p>
-          <p className="text-sm opacity-70 mt-1">{error}</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="max-w-lg mx-auto p-4">
+      {error && (
+        <div className="mb-4 p-3 bg-red-100 border border-red-300 rounded-lg text-sm text-red-700">
+          {error}
+        </div>
+      )}
       <header className="mb-6">
         <h1 className="text-2xl font-bold">AnimeBot</h1>
         {user && (

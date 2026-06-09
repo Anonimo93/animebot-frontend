@@ -2,13 +2,24 @@ import { Outlet, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../auth/TelegramProvider";
 
 export default function Layout() {
-  const { user, tier, loading } = useAuth();
+  const { user, tier, loading, error } = useAuth();
   const location = useLocation();
 
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <p className="text-lg">Cargando...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <p className="text-red-500 font-semibold">Error</p>
+          <p className="text-sm opacity-70 mt-1">{error}</p>
+        </div>
       </div>
     );
   }

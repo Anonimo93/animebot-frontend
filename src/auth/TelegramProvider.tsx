@@ -7,6 +7,7 @@ import {
 } from "react";
 import type { User } from "../types";
 import { login } from "../api/client";
+import WebApp from "@twa-dev/sdk";
 
 interface AuthState {
   user: User | null;
@@ -33,25 +34,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function init() {
       try {
-        const tg = (window as any).Telegram?.WebApp;
-        if (!tg) {
-          setState((s) => ({ ...s, loading: false, error: "No Telegram" }));
-          return;
-        }
-        tg.ready();
-        tg.expand();
-
-        const initData = tg.initData;
-        if (!initData) {
+        if (!WebApp.initData) {
           setState((s) => ({
             ...s,
             loading: false,
-            error: "No initData",
+            error: "No initData from Telegram",
           }));
           return;
         }
 
-        const res = await login(initData);
+        WebApp.ready();
+        WebApp.expand();
+
+        const res = await login(WebApp.initData);
         if (res.ok && res.user) {
           setState({
             user: res.user,
@@ -62,11 +57,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } else {
           setState((s) => ({ ...s, loading: false, error: "Auth failed" }));
         }
-      } catch (e: any) {
+      } catch (e: unknown) {
         setState((s) => ({
           ...s,
           loading: false,
-          error: e.message || "Error",
+          error: e instanceof Error ? e.message : "Error",
         }));
       }
     }

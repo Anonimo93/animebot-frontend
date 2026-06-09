@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getSeriesDetail } from "../api/client";
+import type { SeriesDetail as SeriesDetailType } from "../types";
 
 export default function SeriesDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const [series, setSeries] = useState<any>(null);
+  const [series, setSeries] = useState<SeriesDetailType | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!slug) return;
     setLoading(true);
     getSeriesDetail(slug)
-      .then((d: any) => setSeries(d))
+      .then((d: SeriesDetailType) => setSeries(d))
       .catch(() => setSeries(null))
       .finally(() => setLoading(false));
   }, [slug]);

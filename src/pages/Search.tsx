@@ -1,7 +1,12 @@
 import { useState, type FormEvent } from "react";
 import { searchSeries } from "../api/client";
 import { useAuth } from "../auth/TelegramProvider";
+import WebApp from "@twa-dev/sdk";
 import type { AnimeResult } from "../types";
+
+function openLink(url: string) {
+  WebApp.openLink(url);
+}
 
 export default function Search() {
   const { tier } = useAuth();
@@ -57,23 +62,21 @@ export default function Search() {
               <div className="flex-1 min-w-0">
                 <p className="font-semibold truncate">{r.title}</p>
                 <div className="mt-1 space-y-0.5">
-                  <a
-                    href={r.animeflv_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-sm text-[var(--tg-theme-link-color, #2a76d2)] truncate"
+                  <span
+                    onClick={() => openLink(r.animeflv_url)}
+                    className="block text-sm truncate"
+                    style={{color: 'var(--tg-theme-link-color, #2a76d2)'}}
                   >
                     🔗 AnimeFlV
-                  </a>
+                  </span>
                   {r.channel_link && (
-                    <a
-                      href={r.channel_link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-sm text-[var(--tg-theme-link-color, #2a76d2)] truncate"
+                    <span
+                      onClick={() => openLink(r.channel_link!)}
+                      className="block text-sm truncate"
+                      style={{color: 'var(--tg-theme-link-color, #2a76d2)'}}
                     >
                       📺 Canal
-                    </a>
+                    </span>
                   )}
                   {tier !== "normal" && (
                     <p className="text-xs text-[var(--tg-theme-hint-color)]">

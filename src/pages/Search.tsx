@@ -1,10 +1,13 @@
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type MouseEvent } from "react";
+import { Link } from "react-router-dom";
 import { searchSeries } from "../api/client";
 import { useAuth } from "../auth/TelegramProvider";
 import WebApp from "@twa-dev/sdk";
 import type { AnimeResult } from "../types";
 
-function openLink(url: string) {
+function openLink(url: string, e: MouseEvent) {
+  e.stopPropagation();
+  e.preventDefault();
   WebApp.openLink(url);
 }
 
@@ -50,7 +53,11 @@ export default function Search() {
 
       <div className="space-y-3">
         {results.map((r) => (
-          <div key={r.slug} className="p-3 border rounded-lg text-[var(--tg-theme-text-color)]">
+          <Link
+            key={r.slug}
+            to={`/series/${r.slug}`}
+            className="block p-3 border rounded-lg text-[var(--tg-theme-text-color)] hover:bg-[var(--tg-theme-secondary-bg-color)]"
+          >
             <div className="flex gap-3">
               {r.cover && (
                 <img
@@ -63,7 +70,7 @@ export default function Search() {
                 <p className="font-semibold truncate">{r.title}</p>
                 <div className="mt-1 space-y-0.5">
                   <span
-                    onClick={() => openLink(r.animeflv_url)}
+                    onClick={(e) => openLink(r.animeflv_url, e)}
                     className="block text-sm truncate"
                     style={{color: 'var(--tg-theme-link-color, #2a76d2)'}}
                   >
@@ -71,7 +78,7 @@ export default function Search() {
                   </span>
                   {r.channel_link && (
                     <span
-                      onClick={() => openLink(r.channel_link!)}
+                      onClick={(e) => openLink(r.channel_link!, e)}
                       className="block text-sm truncate"
                       style={{color: 'var(--tg-theme-link-color, #2a76d2)'}}
                     >
@@ -86,7 +93,7 @@ export default function Search() {
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
         {!loading && query && results.length === 0 && (
           <p className="text-center text-[var(--tg-theme-hint-color)]">Sin resultados</p>

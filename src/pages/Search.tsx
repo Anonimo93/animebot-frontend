@@ -30,13 +30,13 @@ export default function Search() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Buscar anime..."
-          className="w-full p-3 border rounded-lg text-lg"
+          className="w-full p-3 border rounded-lg text-lg bg-[var(--tg-theme-bg-color)] text-[var(--tg-theme-text-color)]"
           minLength={2}
         />
         <button
           type="submit"
           disabled={loading}
-          className="mt-2 w-full bg-blue-500 text-white p-3 rounded-lg font-semibold disabled:opacity-50"
+          className="mt-2 w-full bg-[var(--tg-theme-button-color)] text-[var(--tg-theme-button-text-color)] p-3 rounded-lg font-semibold disabled:opacity-50"
         >
           {loading ? "Buscando..." : "Buscar"}
         </button>
@@ -47,7 +47,7 @@ export default function Search() {
           <Link
             key={r.slug}
             to={`/series/${r.slug}`}
-            className="block p-3 border rounded-lg hover:bg-gray-50"
+            className="block p-3 border rounded-lg hover:bg-[var(--tg-theme-secondary-bg-color)] text-[var(--tg-theme-text-color)]"
           >
             <div className="flex gap-3">
               {r.cover && (
@@ -59,7 +59,7 @@ export default function Search() {
               )}
               <div>
                 <p className="font-semibold">{r.title}</p>
-                <p className="text-sm opacity-60">
+                <p className="text-sm text-[var(--tg-theme-hint-color)]">
                   {r.source === "local" ? "En el bot" : "AnimeFlV"}
                 </p>
               </div>
@@ -67,7 +67,7 @@ export default function Search() {
           </Link>
         ))}
         {!loading && query && results.length === 0 && (
-          <p className="text-center opacity-60">Sin resultados</p>
+          <p className="text-center text-[var(--tg-theme-hint-color)]">Sin resultados</p>
         )}
       </div>
     </div>

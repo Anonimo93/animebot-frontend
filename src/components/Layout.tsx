@@ -8,7 +8,7 @@ export default function Layout() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-lg">Cargando...</p>
+        <p className="text-lg text-[var(--tg-theme-text-color)]">Cargando...</p>
       </div>
     );
   }
@@ -16,14 +16,14 @@ export default function Layout() {
   return (
     <div className="max-w-lg mx-auto p-4">
       {error && (
-        <div className="mb-4 p-3 bg-red-100 border border-red-300 rounded-lg text-sm text-red-700">
+        <div className="mb-4 p-3 rounded-lg text-sm" style={{backgroundColor: 'var(--tg-theme-destructive-bg-color, #fee)', color: 'var(--tg-theme-destructive-text-color, #c00)', border: '1px solid var(--tg-theme-section-separator-color, #fcc)'}}>
           {error}
         </div>
       )}
       <header className="mb-6">
         <h1 className="text-2xl font-bold">AnimeBot</h1>
         {user && (
-          <p className="text-sm opacity-70">
+          <p className="text-sm text-[var(--tg-theme-hint-color)]">
             {user.first_name} ·{" "}
             {tier === "owner"
               ? "Owner"
@@ -37,8 +37,8 @@ export default function Layout() {
             to="/"
             className={`px-3 py-1 rounded ${
               location.pathname === "/"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200"
+                ? "bg-[var(--tg-theme-button-color)] text-[var(--tg-theme-button-text-color)]"
+                : "bg-[var(--tg-theme-secondary-bg-color)] text-[var(--tg-theme-text-color)]"
             }`}
           >
             Buscar
@@ -48,8 +48,8 @@ export default function Layout() {
               to="/stats"
               className={`px-3 py-1 rounded ${
                 location.pathname === "/stats"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200"
+                  ? "bg-[var(--tg-theme-button-color)] text-[var(--tg-theme-button-text-color)]"
+                  : "bg-[var(--tg-theme-secondary-bg-color)] text-[var(--tg-theme-text-color)]"
               }`}
             >
               Stats
@@ -61,8 +61,8 @@ export default function Layout() {
                 to="/admin"
                 className={`px-3 py-1 rounded ${
                   location.pathname === "/admin"
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200"
+                    ? "bg-[var(--tg-theme-button-color)] text-[var(--tg-theme-button-text-color)]"
+                    : "bg-[var(--tg-theme-secondary-bg-color)] text-[var(--tg-theme-text-color)]"
                 }`}
               >
                 Admin
@@ -71,8 +71,8 @@ export default function Layout() {
                 to="/admin/series"
                 className={`px-3 py-1 rounded ${
                   location.pathname === "/admin/series"
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200"
+                    ? "bg-[var(--tg-theme-button-color)] text-[var(--tg-theme-button-text-color)]"
+                    : "bg-[var(--tg-theme-secondary-bg-color)] text-[var(--tg-theme-text-color)]"
                 }`}
               >
                 Series
@@ -81,8 +81,8 @@ export default function Layout() {
                 to="/admin/logs"
                 className={`px-3 py-1 rounded ${
                   location.pathname === "/admin/logs"
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200"
+                    ? "bg-[var(--tg-theme-button-color)] text-[var(--tg-theme-button-text-color)]"
+                    : "bg-[var(--tg-theme-secondary-bg-color)] text-[var(--tg-theme-text-color)]"
                 }`}
               >
                 Logs

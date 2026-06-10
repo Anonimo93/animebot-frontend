@@ -12,7 +12,7 @@ export default function AdminLogs() {
 
   return (
     <div>
-      <h2 className="text-xl font-bold mb-4">Logs</h2>
+      <h2 className="text-xl font-bold mb-4 text-[var(--tg-theme-text-color)]">Logs</h2>
       <pre className="p-3 bg-gray-900 text-green-400 text-xs rounded-lg overflow-auto max-h-[70vh] whitespace-pre-wrap">
         {logs || "Cargando..."}
       </pre>

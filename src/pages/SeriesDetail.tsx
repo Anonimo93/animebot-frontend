@@ -32,28 +32,32 @@ export default function SeriesDetail() {
         />
       )}
       <h2 className="text-xl font-bold mb-2">{series.title}</h2>
-      <div className="space-y-1 mb-3">
-        <a
-          href={series.animeflv_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block text-sm text-[var(--tg-theme-link-color, #2a76d2)]"
-        >
-          🔗 AnimeFlV
-        </a>
+      <div className="mb-4 p-3 rounded-lg" style={{backgroundColor: 'var(--tg-theme-secondary-bg-color)'}}>
+        {series.animeflv_url && (
+          <a
+            href={series.animeflv_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block py-1 text-sm"
+            style={{color: 'var(--tg-theme-link-color, #2a76d2)'}}
+          >
+            🔗 Ver en AnimeFlV
+          </a>
+        )}
         {series.channel_link && (
           <a
             href={series.channel_link}
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-sm text-[var(--tg-theme-link-color, #2a76d2)]"
+            className="block py-1 text-sm"
+            style={{color: 'var(--tg-theme-link-color, #2a76d2)'}}
           >
-            📺 Canal de Telegram
+            📺 Unirse al canal de Telegram
           </a>
         )}
         {tier !== "normal" && (
-          <p className="text-xs text-[var(--tg-theme-hint-color)]">
-            🆔 Slug: {series.slug}
+          <p className="text-xs pt-1" style={{color: 'var(--tg-theme-hint-color)'}}>
+            🆔 Slug: <code>{series.slug}</code>
           </p>
         )}
       </div>

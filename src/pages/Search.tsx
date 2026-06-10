@@ -1,9 +1,10 @@
 import { useState, type FormEvent } from "react";
-import { Link } from "react-router-dom";
 import { searchSeries } from "../api/client";
+import { useAuth } from "../auth/TelegramProvider";
 import type { AnimeResult } from "../types";
 
 export default function Search() {
+  const { tier } = useAuth();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<AnimeResult[]>([]);
   const [loading, setLoading] = useState(false);
@@ -44,11 +45,7 @@ export default function Search() {
 
       <div className="space-y-3">
         {results.map((r) => (
-          <Link
-            key={r.slug}
-            to={`/series/${r.slug}`}
-            className="block p-3 border rounded-lg hover:bg-[var(--tg-theme-secondary-bg-color)] text-[var(--tg-theme-text-color)]"
-          >
+          <div key={r.slug} className="p-3 border rounded-lg text-[var(--tg-theme-text-color)]">
             <div className="flex gap-3">
               {r.cover && (
                 <img
@@ -57,14 +54,36 @@ export default function Search() {
                   className="w-12 h-16 object-cover rounded"
                 />
               )}
-              <div>
-                <p className="font-semibold">{r.title}</p>
-                <p className="text-sm text-[var(--tg-theme-hint-color)]">
-                  {r.source === "local" ? "En el bot" : "AnimeFlV"}
-                </p>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold truncate">{r.title}</p>
+                <div className="mt-1 space-y-0.5">
+                  <a
+                    href={r.animeflv_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-sm text-[var(--tg-theme-link-color, #2a76d2)] truncate"
+                  >
+                    🔗 AnimeFlV
+                  </a>
+                  {r.channel_link && (
+                    <a
+                      href={r.channel_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-sm text-[var(--tg-theme-link-color, #2a76d2)] truncate"
+                    >
+                      📺 Canal
+                    </a>
+                  )}
+                  {tier !== "normal" && (
+                    <p className="text-xs text-[var(--tg-theme-hint-color)]">
+                      🆔 {r.slug}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
-          </Link>
+          </div>
         ))}
         {!loading && query && results.length === 0 && (
           <p className="text-center text-[var(--tg-theme-hint-color)]">Sin resultados</p>

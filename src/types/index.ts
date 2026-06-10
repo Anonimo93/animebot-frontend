@@ -15,10 +15,10 @@ export interface LoginResponse {
 export interface AnimeResult {
   title: string;
   slug: string;
-  url: string;
+  animeflv_url: string;
   cover: string;
+  channel_link: string | null;
   source: "animeflv" | "local";
-  local_id?: number;
 }
 
 export interface SearchResponse {
@@ -35,6 +35,8 @@ export interface SeriesDetail {
   score: string;
   type: string;
   status: string;
+  animeflv_url: string;
+  channel_link: string | null;
 }
 
 export interface UserStats {
